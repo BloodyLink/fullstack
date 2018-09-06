@@ -57,3 +57,14 @@ def getAllBooks():
                 #Y guardamos todo...
                 Book.objects.get_or_create(category_id=category, title=title, price=price, thumbnail=thumbnail, url=url, stock=stock, description=description, upc=upc)
     return "ok"
+
+def updateDatabase(){
+
+    try:
+        getAllCategories()
+        getAllBooks()
+    excepto NameError:
+        print("There was an error trying to update the database.")
+
+    return HttpResponse("Database Updated.")
+}

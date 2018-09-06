@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from apps.base.views import index, books
+from apps.base.views import index, books, bookDetails, bookDelete, bookSearch
+from apps.scraper.views import updateDatabase
 
 
 urlpatterns = [
@@ -26,4 +27,5 @@ urlpatterns = [
     url(r'^book_details/', bookDetails)
     url(r'^book_delete/', bookDelete)
     url(r'^book_search/', bookSearch)
+    url(r'^update_database/', updateDatabase)
 ]
