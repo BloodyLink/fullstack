@@ -6,6 +6,7 @@ from django.http import HttpResponse
 import bs4 as bs
 import urllib.request
 
+
 #Obtenemos todas las categorias y sus links correspondientes.
 def getAllCategories():
     print("Getting All Categories...")
@@ -55,8 +56,10 @@ def getAllBooks():
                 Book.objects.get_or_create(category_id=category, title=title, price=price, thumbnail=thumbnail, url=url, stock=stock, description=description, upc=upc)
 
 
-def index(request):
-    return HttpResponse(links)
+# def index(request):
+#     return HttpResponse(links)
+
+
 
 
 # cat = Category.objects.all()
