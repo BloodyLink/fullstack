@@ -63,7 +63,7 @@ def updateDatabase(){
     try:
         getAllCategories()
         getAllBooks()
-    excepto NameError:
+    except NameError:
         print("There was an error trying to update the database.")
 
     return HttpResponse("Database Updated.")
