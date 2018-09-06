@@ -20,7 +20,7 @@ def getAllCategories():
         catName = cat.text.strip()
         Category.objects.get_or_create(name=catName, url=catUrl)
     
-    return "ok";
+    return "ok"
 
 #Guardaremos los libros por categoria.
 def getAllBooks():
@@ -56,4 +56,4 @@ def getAllBooks():
 
                 #Y guardamos todo...
                 Book.objects.get_or_create(category_id=category, title=title, price=price, thumbnail=thumbnail, url=url, stock=stock, description=description, upc=upc)
-    return "ok";
+    return "ok"
