@@ -30,6 +30,7 @@
                                     <td>{{ book.price }}</td>
                                     <td>{{ book.stock }}</td>
                                     <td>{{ book.upc }}</td>
+                                    <td><a href="book_delete?book_id={{ book.id }}" onclick="return confirm('Are you sure yo want to delete this book?')"></a></td>
                                 </tr>
                             {% endfor %}
                     </table>

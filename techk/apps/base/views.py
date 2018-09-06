@@ -40,3 +40,24 @@ def bookDetails(request):
         'book': bookDetails
     }
     return HttpResponse(template.render(context, request)) 
+
+def bookDelete(request):
+    id = request.GET.get('book_id')
+
+    if(id == 'none'):
+        return HttpResponse("No existe libro con id " + id)
+    else:
+        bookDetails = Book.objects.get(id=id)
+        bookDetails.delete()
+        return HttpResponse("Libro con id " + id + " eliminado.")
+
+def bookSearch(request):
+    word = request.POST.get('word')
+    categories = Category.objects.all()
+    books = Book.objects.filter(string__icontains=word)
+    template = loader.get_template('base/books.html')
+    context = {
+        'books': books
+        'categories': categories
+    }
+    return HttpResponse(template.render(context, request))
