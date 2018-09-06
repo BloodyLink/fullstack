@@ -9,13 +9,36 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col s6">
-                //img
+            <div class="col s12">
+                <h1>Book Details</h1>
             </div>
         </div>
         <div class="row">
             <div class="col s6">
-                //data
+                <img src="http://books.toscrape.com{{ book.url }}" alt="thumbnail" class="center-text">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s6">
+                <h3>{{ book.title }}</h3>
+                <table>
+                    <tr>
+                        <td>Price: </td>
+                        <td>{{ book.price }}</td>
+                    </tr>
+                    <tr>
+                        <td>Description: </td>
+                        <td>{{ book.description }}</td>
+                    </tr>
+                    <tr>
+                        <td>Stock: </td>
+                        <td>{{ book.stock }}</td>
+                    </tr>
+                    <tr>
+                        <td>UPC: </td>
+                        <td>{{ book.upc }}</td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
