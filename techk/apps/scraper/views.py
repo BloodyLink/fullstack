@@ -68,3 +68,12 @@ def updateDatabase(){
 
     return HttpResponse("Database Updated.")
 }
+class Operation(){
+    def prom(grades):
+        sum = 0;
+        for grade in grades:
+            sum += grade
+        prom = sum / len(grades)
+        return prom
+}
+
