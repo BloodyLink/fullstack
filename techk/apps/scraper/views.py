@@ -13,14 +13,13 @@ def getAllCategories():
     soup = bs.BeautifulSoup(sauce, "html.parser")
     #Obtenemos string con categorias desde sitio
     categoriesOrigin = soup.find("div", {"class": "side_categories"})
-    #creamos un array con string de categorias
+    #guardamos cada una en la BD
     for cat in categoriesOrigin.ul.li.ul.find_all('a'):
         catUrl = cat.get('href')
         catName = cat.text.strip()
         Category.objects.get_or_create(name=catName, url=catUrl)
 
-
-#ahora guardaremos los libros por categoria.
+#Guardaremos los libros por categoria.
 def getAllBooks():
     print("Getting All Books...")
     for cat in Category.objects.all():
@@ -42,32 +41,18 @@ def getAllBooks():
                 thumbnail = thumbnail.replace('../../../..', '')
                 url = booksOrigin[i].find("div", {"class": "image_container"}).find("a").get("href")
                 url = url.replace('../../..', 'catalogue')
-                # print(thumbnail)
-                stock = 1
-                Book.objects.get_or_create(category_id=category, title=title, price=price, thumbnail=thumbnail, url=url, stock="0", description=" ", upc=" ")
 
-            
-#Por ultimo... los detalles faltantes de cada libro...
-def getBooksDetails():
-    print("Getting Book Details...")
-    for lib in Book.objects.all():
-        # print('http://books.toscrape.com/' + lib.url)
-        try:
-            salsa = urllib.request.urlopen('http://books.toscrape.com/' + lib.url).read()
-        except urllib.error.HTTPError:
-            break
-        sopa = bs.BeautifulSoup(salsa, "html.parser")
-        description = sopa.find("p", {"class": None}).string
-        description = description.replace('...more', '')
-        stock = sopa.find("p", {"class": "availability"}).text
-        stock = int(''.join(filter(str.isdigit, stock)))
-        upc = sopa.find("table", {"class", "table-striped"}).tr.td.text
-        lib.description = description
-        lib.stock = stock
-        lib.upc = upc
-        lib.save()
+                #Ahora obtendremos los detalles de este libro...
+                salsa = urllib.request.urlopen('http://books.toscrape.com/' + url).read()
+                sopa = bs.BeautifulSoup(salsa, "html.parser")
+                description = sopa.find("p", {"class": None}).string
+                description = description.replace('...more', '')
+                stock = sopa.find("p", {"class": "availability"}).text
+                stock = int(''.join(filter(str.isdigit, stock)))
+                upc = sopa.find("table", {"class", "table-striped"}).tr.td.text
 
-
+                #Y guardamos todo...
+                Book.objects.get_or_create(category_id=category, title=title, price=price, thumbnail=thumbnail, url=url, stock=stock, description=description, upc=upc)
 
 
 def index(request):
