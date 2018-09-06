@@ -19,6 +19,8 @@ def getAllCategories():
         catUrl = cat.get('href')
         catName = cat.text.strip()
         Category.objects.get_or_create(name=catName, url=catUrl)
+    
+    return "ok";
 
 #Guardaremos los libros por categoria.
 def getAllBooks():
@@ -54,49 +56,4 @@ def getAllBooks():
 
                 #Y guardamos todo...
                 Book.objects.get_or_create(category_id=category, title=title, price=price, thumbnail=thumbnail, url=url, stock=stock, description=description, upc=upc)
-
-
-# def index(request):
-#     return HttpResponse(links)
-
-
-
-
-# cat = Category.objects.all()
-
-# print(cat)
-
-# booksOrigin = soup.findAll("article", {"class": "product_pod"})
-# # print(len(booksOrigin))
-# # print(booksOrigin[1].find("div", {"class": "product_price"}).find("p", {"class": "price_color"}).text)
-# books = []
-
-# class Book():
-#     title = ""
-#     price = ""
-
-#     def __init__(self, title, price):
-#         self.title = title
-#         self.price = price
-
-
-# for i in range(len(booksOrigin)):
-#     title = booksOrigin[i].h3.a['title']
-#     price = booksOrigin[i].find("div", {"class": "product_price"}).find("p", {"class": "price_color"}).text
-    
-#     book = Book(title, price)
-#     # print(book.title)
-#     books.append(book)
-    
-# for b in books:
-#     print(b.price)
-# print(books[1].price)
-
-# i = 0
-# while i < len(booksOrigin)
-#     if
-
-
-# for book in booksOrigin:
-
-
+    return "ok";
