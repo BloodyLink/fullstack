@@ -14,15 +14,29 @@ def index(request):
 def books(request):
 
     id = request.GET.get('cat_id')
-
+    categories = Category.objects.all()
     if(id == 'none'):
         bookList = Book.objects.all()
     else:
-        id = request.GET.get('cat_id')
         bookList = Book.objects.filter(category_id=id).all()
     
     template = loader.get_template('base/books.html')
     context = {
         'books': bookList
+        'categories': categories
     }
     return HttpResponse(template.render(context, request))
+
+def bookDetails(request):
+    id = request.GET.get('book_id')
+
+    if(id == 'none'):
+        return HttpResponse("No existe libro con id " + id)
+    else:
+        bookDetails = Book.objects.get(id=id)
+    
+    template = loader.get_template('base/book_details.html')
+    context = {
+        'book': bookDetails
+    }
+    return HttpResponse(template.render(context, request)) 

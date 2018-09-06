@@ -26,7 +26,7 @@ def getAllCategories():
 def getAllBooks():
     print("Getting All Books...")
     for cat in Category.objects.all():
-        for i in range(1, 20):
+        for i in range(1, 300):
             page = cat.url.replace('index.html', 'page-')
             try:
                 salsa = urllib.request.urlopen('http://books.toscrape.com/' + page + '%s.html' % i).read()

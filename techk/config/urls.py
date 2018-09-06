@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^$', index),
     url(r'^api-auth/', include('rest_framework.urls')),
     url(r'^books/', books)
+    url(r'^book_details/', bookDetails)
 ]
