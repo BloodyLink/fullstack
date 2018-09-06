@@ -68,6 +68,8 @@ def updateDatabase(){
 
     return HttpResponse("Database Updated.")
 }
+
+#Esta funcion no es de utilidad alguna para la aplicacion, y su uso es solo para pruebas unitarias.
 class Operation(){
     def prom(grades):
         sum = 0;
