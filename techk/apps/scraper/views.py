@@ -26,19 +26,51 @@ def getAllCategories():
 def getAllBooks():
     print("Getting All Books...")
     for cat in Category.objects.all():
+        address = 'http://books.toscrape.com/' + cat.url
         for i in range(1, 300):
-            page = cat.url.replace('index.html', 'page-')
+            # page = page.replace('index.html', 'page-')
+            # print('http://books.toscrape.com/' + page + '%s.html' % i)
+
+            # print(url)
+
+            # currentPage = ""
+
+            # print(address + currentPage)
+            # print(address)
             try:
-                salsa = urllib.request.urlopen('http://books.toscrape.com/' + page + '%s.html' % i).read()
+                if "index.html" not in address:
+                    print(address + '%s.html' % i)
+                    salsa = urllib.request.urlopen(address + '%s.html' % i).read()
+                else:
+                    print(address)
+                    salsa = urllib.request.urlopen(address).read()
+                    address = address.replace('index.html', 'page-')
+                print("Books added")
             except urllib.error.HTTPError:
+                print("No books found here")
                 break
+            
+
+            
+            # page = page + '%s.html' % i
+            # currentPage = '%s.html' % i
+
             sopa = bs.BeautifulSoup(salsa, "html.parser")
             booksOrigin = sopa.findAll("article", {"class": "product_pod"})
-            books = []
+            # books = []
+
+            # print(page)
+
+
+            # if 'index.html' not in page:
+            #     page = page.replace('page-%s.html' % i, 'page-%s.html' % int(i) + 1)
+            # else: 
+            #     page = page.replace('index.html', 'page-%s.html' % i)
 
             for i in range(len(booksOrigin)):
                 category = cat.id
                 title = booksOrigin[i].h3.a['title']
+                print(title)
                 price = booksOrigin[i].find("div", {"class": "product_price"}).find("p", {"class": "price_color"}).text
                 thumbnail = booksOrigin[i].find("div", {"class": "image_container"}).find("img", {"class", "thumbnail"}).get('src')
                 thumbnail = thumbnail.replace('../../../..', '')
@@ -48,7 +80,11 @@ def getAllBooks():
                 #Ahora obtendremos los detalles de este libro...
                 salsa = urllib.request.urlopen('http://books.toscrape.com/' + url).read()
                 sopa = bs.BeautifulSoup(salsa, "html.parser")
-                description = sopa.find("p", {"class": None}).string
+                if hasattr(sopa.find("p", {"class": None}), 'text'):
+                    description = sopa.find("p", {"class": None}).text
+                else:
+                    description = ""
+                
                 description = description.replace('...more', '')
                 stock = sopa.find("p", {"class": "availability"}).text
                 stock = int(''.join(filter(str.isdigit, stock)))
@@ -56,9 +92,10 @@ def getAllBooks():
 
                 #Y guardamos todo...
                 Book.objects.get_or_create(category_id=category, title=title, price=price, thumbnail=thumbnail, url=url, stock=stock, description=description, upc=upc)
+        # page = page.replace('index.html', 'page-%s.html' % i)
     return "ok"
 
-def updateDatabase(){
+def updateDatabase(request):
 
     try:
         getAllCategories()
@@ -66,16 +103,16 @@ def updateDatabase(){
     except NameError:
         print("There was an error trying to update the database.")
 
-    return HttpResponse("Database Updated.")
-}
+    return HttpResponse("Database Updated.<br><a href='/'>Return to Index</a>")
+
 
 #Esta funcion no es de utilidad alguna para la aplicacion, y su uso es solo para pruebas unitarias.
-class Operation(){
+class Operation():
     def prom(grades):
         sum = 0;
         for grade in grades:
             sum += grade
         prom = sum / len(grades)
         return prom
-}
+
 

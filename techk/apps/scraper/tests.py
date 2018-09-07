@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.test import TestCase
 from apps.scraper.models import Category, Book
-from .Views import Operation
+from .views import Operation
 
 # Create your tests here.
 class CategoryTestCase(TestCase):

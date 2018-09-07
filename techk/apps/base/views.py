@@ -22,7 +22,7 @@ def books(request):
     
     template = loader.get_template('base/books.html')
     context = {
-        'books': bookList
+        'books': bookList,
         'categories': categories
     }
     return HttpResponse(template.render(context, request))
@@ -49,15 +49,15 @@ def bookDelete(request):
     else:
         bookDetails = Book.objects.get(id=id)
         bookDetails.delete()
-        return HttpResponse("Libro con id " + id + " eliminado.")
+        return HttpResponse("Libro con id " + id + " eliminado.<br><a href='/'>Return to Index</a>")
 
 def bookSearch(request):
     word = request.POST.get('word')
     categories = Category.objects.all()
-    books = Book.objects.filter(string__icontains=word)
+    books = Book.objects.filter(title__icontains=word)
     template = loader.get_template('base/books.html')
     context = {
-        'books': books
+        'books': books,
         'categories': categories
     }
     return HttpResponse(template.render(context, request))

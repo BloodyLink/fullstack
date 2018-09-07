@@ -1,5 +1,6 @@
 <!doctype html>
 <head>
+    <title>David Quezada | Scraper con Django</title>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
 
@@ -24,6 +25,7 @@
                 <h3>Book Search:</h3>
                 <hr>
                 <form action="book_search" method="POST">
+                    {% csrf_token %}
                     <div class="input-field">
                         <input type="text" name="word" placeholder="Enter Book Title" >
                     </div>
