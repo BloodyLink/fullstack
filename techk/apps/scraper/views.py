@@ -28,15 +28,7 @@ def getAllBooks():
     for cat in Category.objects.all():
         address = 'http://books.toscrape.com/' + cat.url
         for i in range(1, 300):
-            # page = page.replace('index.html', 'page-')
-            # print('http://books.toscrape.com/' + page + '%s.html' % i)
 
-            # print(url)
-
-            # currentPage = ""
-
-            # print(address + currentPage)
-            # print(address)
             try:
                 if "index.html" not in address:
                     print(address + '%s.html' % i)
@@ -49,23 +41,11 @@ def getAllBooks():
             except urllib.error.HTTPError:
                 print("No books found here")
                 break
-            
 
-            
-            # page = page + '%s.html' % i
-            # currentPage = '%s.html' % i
 
             sopa = bs.BeautifulSoup(salsa, "html.parser")
             booksOrigin = sopa.findAll("article", {"class": "product_pod"})
-            # books = []
 
-            # print(page)
-
-
-            # if 'index.html' not in page:
-            #     page = page.replace('page-%s.html' % i, 'page-%s.html' % int(i) + 1)
-            # else: 
-            #     page = page.replace('index.html', 'page-%s.html' % i)
 
             for i in range(len(booksOrigin)):
                 category = cat.id
